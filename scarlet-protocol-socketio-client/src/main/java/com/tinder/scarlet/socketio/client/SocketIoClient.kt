@@ -118,11 +118,10 @@ internal class SocketIoMessageChannel(
         }
         socket?.on(eventName) {
             val safeValue = it as Array<Any>
-            if(safeValue.size == 0) {
+            if(safeValue.isEmpty()) {
                 Message.Text("")
             } else {
-                val value = safeValue[0]
-                when (value) {
+                when (val value = safeValue[0]) {
                     is JSONObject -> {
                         messageQueueListener?.onMessageReceived(
                             this, this,

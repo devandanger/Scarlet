@@ -121,7 +121,7 @@ internal class SocketIoMessageChannel(
             if(safeValue.size == 0) {
                 Message.Text("")
             } else {
-                value = safeValue[0]
+                val value = safeValue[0]
                 when (value) {
                     is JSONObject -> {
                         messageQueueListener?.onMessageReceived(

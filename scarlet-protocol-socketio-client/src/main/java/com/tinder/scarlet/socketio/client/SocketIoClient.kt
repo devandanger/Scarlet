@@ -118,7 +118,7 @@ internal class SocketIoMessageChannel(
         }
         socket?.on(eventName) {
             val safeValue = it as Array<Any>
-            if(safeValue.isEmpty()) {
+            if (safeValue.isEmpty()) {
                 Message.Text("")
             } else {
                 when (val value = safeValue[0]) {

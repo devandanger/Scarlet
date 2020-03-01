@@ -117,25 +117,30 @@ internal class SocketIoMessageChannel(
             return
         }
         socket?.on(eventName) {
-            val value = it[0]
-            when (value) {
-                is JSONObject -> {
-                    messageQueueListener?.onMessageReceived(
-                        this, this,
-                        Message.Text(value.toString())
-                    )
-                }
-                is String -> {
-                    messageQueueListener?.onMessageReceived(
-                        this, this,
-                        Message.Text(value.toString())
-                    )
-                }
-                is ByteArray -> {
-                    messageQueueListener?.onMessageReceived(
-                        this, this,
-                        Message.Bytes(value)
-                    )
+            val safeValue = it as Array<Any>
+            if(safeValue.size == 0) {
+                Message.Text("")
+            } else {
+                value = safeValue[0]
+                when (value) {
+                    is JSONObject -> {
+                        messageQueueListener?.onMessageReceived(
+                            this, this,
+                            Message.Text(value.toString())
+                        )
+                    }
+                    is String -> {
+                        messageQueueListener?.onMessageReceived(
+                            this, this,
+                            Message.Text(value.toString())
+                        )
+                    }
+                    is ByteArray -> {
+                        messageQueueListener?.onMessageReceived(
+                            this, this,
+                            Message.Bytes(value)
+                        )
+                    }
                 }
             }
         }
